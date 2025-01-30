@@ -1,0 +1,47 @@
+# Server Configuration
+server:
+  port: 8084  # Port on which the service will run
+
+spring:
+  data:
+    mongodb:
+      database: orderservice
+      uri: mongodb+srv://jayavarshinig:key@cluster0.swqoy.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+  application:
+    name: OrderService
+
+cloud:
+  discovery:
+    client:
+      service-url:
+        defaultZone: http://localhost:8761/eureka/  # Eureka Server URL
+    register-with-eureka: true
+    fetch-registry: true
+    instance:
+      lease-expiration-duration-in-seconds: 30  # Lease expiration duration
+      lease-renewal-interval-in-seconds: 15  # Lease renewal interval
+  config:
+    uri: http://localhost:8888/  # Config server URL
+    import: config-server
+    enabled: false  # Disable config server integration
+
+# Springdoc OpenAPI Configuration
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+
+# External service URLs
+services:
+  user-service-url: http://localhost:8080/api/users/exists/
+  book-service-url: http://localhost:8082/api/books/
+  notification-service-url: http://localhost:8086/notifications
+
+# Management Configuration
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"  # Expose all management endpoints
+
